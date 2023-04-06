@@ -1,0 +1,89 @@
+builds:
+  - id: darwin-amd64
+    main: ./
+    binary: live-feed
+    goos:
+      - darwin
+    goarch:
+      - amd64
+    env:
+      - CGO_ENABLED=1
+      - PKG_CONFIG_SYSROOT_DIR=/sysroot/macos/amd64
+      - PKG_CONFIG_PATH=/sysroot/macos/amd64/usr/local/lib/pkgconfig
+      - CC=o64-clang
+      - CXX=o64-clang++
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
+  - id: darwin-arm64
+    main: ./
+    binary: live-feed
+    goos:
+      - darwin
+    goarch:
+      - arm64
+    env:
+      - CGO_ENABLED=1
+      - PKG_CONFIG_SYSROOT_DIR=/sysroot/macos/amd64
+      - PKG_CONFIG_PATH=/sysroot/macos/arm64/usr/local/lib/pkgconfig
+      - CC=oa64-clang
+      - CXX=oa64-clang++
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
+  - id: linux-amd64
+    main: ./
+    binary: live-feed
+    goos:
+      - linux
+    goarch:
+      - amd64
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
+  - id: windows-amd64
+    main: ./
+    binary: live-feed
+    goos:
+      - windows
+    goarch:
+      - amd64
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
+
+
+archives:
+  - id: live-feed
+    builds:
+      - linux-amd64
+      - windows-amd64
+      - darwin-amd64
+      - darwin-arm64
+    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    format: zip
+    wrap_in_directory: false
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+# release:
+#   github:
+#     owner: goreleaser
+#     name: golang-cross-example
+#   prerelease: auto
+#   draft: false
