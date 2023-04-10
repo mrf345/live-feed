@@ -64,7 +64,7 @@ archives:
       - windows-amd64
       - darwin-amd64
       - darwin-arm64
-    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    name_template: "live-feed-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
     format: zip
     wrap_in_directory: false
 
@@ -80,10 +80,3 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-
-# release:
-#   github:
-#     owner: goreleaser
-#     name: golang-cross-example
-#   prerelease: auto
-#   draft: false

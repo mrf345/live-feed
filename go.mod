@@ -1,4 +1,4 @@
-module github.com/mrf345/livefeed
+module github.com/mrf345/live-feed
 
 go 1.20
 
